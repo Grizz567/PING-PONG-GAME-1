@@ -23,12 +23,33 @@ var ball = {
 
 function setup(){
   var canvas =  createCanvas(700,600);
+  canvas.parent('canvas');
+  video.size(600,300);
+  video.hide();
+
+  poseNet = ml5.poseNEt(video, modelLoaded);
 }
+
+function modelLoaded(){
+  console.log(modelLoaded);
+}
+
+function gotPoses(results){
+  noseY = results[0].pose.nose.y;
+  console.log("noseY=" + noseY)
+}
+
 
 
 function draw(){
 
- background(0); 
+  background("#d3d3d3");
+  if(noseY < 150){
+    ball = ball-1;
+  }
+  if(noseY > 150){
+    ball = ball+1;
+  }
 
  fill("black");
  stroke("black");
